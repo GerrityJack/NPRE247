@@ -1,0 +1,7 @@
+lambdaA
+lambdaB
+N_A0
+N_B0
+N_C0
+deltat
+T_final

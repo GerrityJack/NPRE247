@@ -21,4 +21,4 @@ The program will return the following results to an output file:
 ThreeComponentDecayOutput.txt (text file) - Numerical and Analytical solutions
 GraphInput.json (JSON File) - File to be used as input to plot graph with PlotDecayChain Function:
     python3 PlotDecayChain.py GraphInput.json 
---> Will output graph with course, medium, and fine numerical solutions as well as Analytical solutions
+--> Will output graph with coarse, medium, and fine numerical solutions as well as Analytical solutions

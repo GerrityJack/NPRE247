@@ -1,0 +1,13 @@
+ 
+            Analytical Solution:
+            After 60.0 hours...
+            There is 7.260202254496784e-06 of Component A,
+            There is 3.008633669657687 of Component B,
+            There is 96.99135907014006 of Component C.
+
+            Numerical solution:
+            After 60.0 hours...
+            There is 6.255707642642439e-07 of Component A,
+            There is 2.8378446981518115 of Component B,
+            There is 97.16215467627742 of Component C.
+         

@@ -8,13 +8,13 @@ the time after which isotope quantities are measured (t_final)
 and the time incremented over (deltat)
 
 The input file should be structured like so:
-halfA
-halfB
+halfA (in hours)
+halfB (in hours)
 N_A0
 N_B0
 N_C0
-deltat
-T_final
+deltat (in hours)
+T_final (in hours)
 
 The program will return the following results to an output file:
 

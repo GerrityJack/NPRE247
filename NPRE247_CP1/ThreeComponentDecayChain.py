@@ -95,12 +95,13 @@ for i in range(len(nCf)-1):
 
 # Create arrays to graph maxiums against changing deltat
 
-changing_deltat = np.zeros(int(T_final/(deltat/4)))
-for i in range(len(np.zeros(int(T_final/(deltat/4))))):
+changing_deltat = np.zeros(20)
+for i in range(20):
     changing_deltat[i] = deltat *2**(-i)
 
-MaxB = np.zeros(len(timestep3))
-for i in range(len(timestep3)):
+MaxB = np.zeros(20)
+percent = 0
+for i in range(20):
     length = int(T_final / changing_deltat[i])
     dummy = np.zeros(length)
     dummyA = np.zeros(length)
@@ -110,9 +111,11 @@ for i in range(len(timestep3)):
         dummyA[k+1] = -lambdaA * dummyA[k] * changing_deltat[i] + dummyA[k]
         dummy[k+1] = lambdaA * dummyA[k] * changing_deltat[i] - lambdaB * dummy[k] * changing_deltat[i] + dummy[k]
     MaxB[i] = np.argmax(dummy) * changing_deltat[i]
-    
-timeline = np.zeros(int(T_final/(deltat/4)))
-for i in range(len(np.zeros(int(T_final/(deltat/4))))):
+    percent += 5
+    print(f'{percent}%')
+
+timeline = np.zeros(20)
+for i in range(20):
     timeline[i] = 6.97875
 
 B_value = AnalyticalB(6.97875)

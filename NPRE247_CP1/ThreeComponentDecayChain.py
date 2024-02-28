@@ -16,6 +16,9 @@ def AnalyticalB(T):
 def AnalyticalC(T):
     return (N_A0-N_A0* np.exp(-lambdaA*T)-((lambdaA/(lambdaB-lambdaA))*N_A0*(np.exp(-lambdaA*T)-np.exp(-lambdaB*T)) + N_B0* np.exp(-lambdaB*T)))- + N_C0
 
+def Maxium_IsotopeB(t):
+    return (lambdaA*N_A0* np.exp((-lambdaA*t))/(lambdaB)) - ((lambdaA)/(lambdaB - lambdaA)*
+            N_A0*(np.exp (-lambdaA * t) - np.exp(-lambdaB*t)) + N_B0*np.exp(-lambdaB*t))
 
 # Open file and read to associated variables
 
@@ -90,6 +93,29 @@ for i in range(len(nCm)-1):
 for i in range(len(nCf)-1):
     nCf[i+1] = lambdaB*nBf[i] * (deltat/4) + nCf[i]
 
+# Create arrays to graph maxiums against changing deltat
+
+changing_deltat = np.zeros(int(T_final/(deltat/4)))
+for i in range(len(np.zeros(int(T_final/(deltat/4))))):
+    changing_deltat[i] = deltat *2**(-i)
+
+MaxB = np.zeros(len(timestep3))
+for i in range(len(timestep3)):
+    length = int(T_final / changing_deltat[i])
+    dummy = np.zeros(length)
+    dummyA = np.zeros(length)
+    dummy[0] = N_B0
+    dummyA[0] = N_A0
+    for k in range(length-1):
+        dummyA[k+1] = -lambdaA * dummyA[k] * changing_deltat[i] + dummyA[k]
+        dummy[k+1] = lambdaA * dummyA[k] * changing_deltat[i] - lambdaB * dummy[k] * changing_deltat[i] + dummy[k]
+    MaxB[i] = np.argmax(dummy) * changing_deltat[i]
+    
+timeline = np.zeros(int(T_final/(deltat/4)))
+for i in range(len(np.zeros(int(T_final/(deltat/4))))):
+    timeline[i] = 6.97875
+
+B_value = AnalyticalB(6.97875)
 
 # Create Dictionary to Read to JSON
 
@@ -112,6 +138,10 @@ JSON["AnalyticalC"] = list(AnalyticalC(timestep))
 JSON['analytical_sol_A'] = AnalyticalA(T_final)
 JSON['analytical_sol_B'] = AnalyticalB(T_final)
 JSON['analytical_sol_C'] = AnalyticalC(T_final)
+JSON['MaxB'] = list(MaxB)
+JSON['changing_deltat'] = list(changing_deltat)
+JSON['B_value'] = B_value
+JSON['timeline'] = list(timeline)
 
 
 if __name__ == "__main__":
@@ -130,6 +160,8 @@ if __name__ == "__main__":
             There is {nA[-1]} of Component A,
             There is {nB[-1]} of Component B,
             There is {nC[-1]} of Component C.
+
+            The Maxiumum amount of component B is {B_value} and occurs after 6.97875 hours.
          '''
         )
         f.close()

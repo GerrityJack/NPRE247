@@ -10,4 +10,6 @@
             There is 6.255707642642439e-07 of Component A,
             There is 2.8378446981518115 of Component B,
             There is 97.16215467627742 of Component C.
+
+            The Maxiumum amount of component B is 64.54777290027813 and occurs after 6.97875 hours.
          

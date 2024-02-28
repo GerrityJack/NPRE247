@@ -21,4 +21,13 @@ The program will return the following results to an output file:
 ThreeComponentDecayOutput.txt (text file) - Numerical and Analytical solutions
 GraphInput.json (JSON File) - File to be used as input to plot graph with PlotDecayChain Function:
     python3 PlotDecayChain.py GraphInput.json 
---> Will output graph with coarse, medium, and fine numerical solutions as well as Analytical solutions
+
+    Outputs:
+        Three Component Decay Chain Graph.png
+            Graph of Coarse, Medium and Fine Numerical Solutions for Isotopes A, B, and C along with Analytical Solution
+        
+        Time at which Isotope B Reaches a Maxium Graph.png
+            Graph of Fine Numerical Solutions along with Sum of All Isotopes at Every Time Value
+
+        Numerical decays with Total Isotope Count.png
+            Graph Comparing the Effects of Different Changes in Time with the Time at which Isotope B Reaches a Maximum

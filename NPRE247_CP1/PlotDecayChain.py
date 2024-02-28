@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import sys
 
+
 f = open(sys.argv[1],'r')
 JSON = json.load(f)
 f.close()
@@ -22,6 +23,10 @@ nCf = JSON["NumericalCf"]
 AnalyticalA = JSON["AnalyticalA"] 
 AnalyticalB = JSON["AnalyticalB"]
 AnalyticalC = JSON["AnalyticalC"]
+MaxB = JSON['MaxB']
+changing_deltat = JSON['changing_deltat']
+B_value = JSON['B_value']
+timeline = JSON['timeline']
 
 
 # Plot Analytical Solutions
@@ -53,3 +58,36 @@ if __name__ == "__main__":
     plt.ioff()
     plt.ion()
     plt.savefig('Three Component Decay Chain Graph')
+
+total = np.zeros(len(timestep3))
+for i in range(len(total)):
+    total[i] = nAf[i] + nBf[i] + nCf[i]
+
+plt.clf()
+plt.plot(timestep3,total,'r',label = 'Total of all isotopes')
+plt.plot(timestep3,nAf,'k:',label = 'Numerical A')
+plt.plot(timestep3,nBf,'b:',label = 'Numerical B')
+plt.plot(timestep3,nCf,'g:',label = 'Numerical C')
+
+if __name__ == "__main__":
+    plt.xlabel('Time (Hours)')
+    plt.ylabel('Quanitiy of Component')
+    plt.title('Three Component Decay Chain Calculated Numerically with Total')
+    plt.legend(fontsize="8")
+    plt.ioff()
+    plt.ion()
+    plt.savefig('Numerical decays with Total Isotope Count')
+
+plt.clf()
+plt.plot(changing_deltat, MaxB,'.', color="orange", label = 'Numerical Solutions for Different Changes in Time')
+plt.plot(changing_deltat, timeline,'b', label = 'Empirical Solution')
+
+if __name__ == "__main__":
+    plt.xlabel('Inverse Change in Time (hours^-1)')
+    plt.ylabel('Time at which Maxium of Isotope B Occurs')
+    plt.title('Changing Time at which Isotope B Reaches a Maxium')
+    plt.legend(fontsize="8")
+    plt.xscale('log')
+    plt.ioff()
+    plt.ion()
+    plt.savefig('Time at which Isotope B Reaches a Maxium Graph')

@@ -78,9 +78,13 @@ if __name__ == "__main__":
     plt.ion()
     plt.savefig('Numerical decays with Total Isotope Count')
 
+inverse_deltat = []
+for i in changing_deltat:
+    inverse_deltat.append(1/i)
+
 plt.clf()
-plt.plot(changing_deltat, MaxB,'.', color="orange", label = 'Numerical Solutions for Different Changes in Time')
-plt.plot(changing_deltat, timeline,'b', label = 'Empirical Solution')
+plt.plot(inverse_deltat, MaxB,'.', color="orange", label = 'Numerical Solutions for Different Changes in Time')
+plt.plot(inverse_deltat, timeline,'b', label = 'Empirical Solution')
 
 if __name__ == "__main__":
     plt.xlabel('Inverse Change in Time (hours^-1)')

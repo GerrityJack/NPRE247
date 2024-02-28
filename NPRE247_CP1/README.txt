@@ -1,4 +1,4 @@
-Run ThreeComponentDecayChain.py with input ThreeComponentDecayChainInput.txt. In the terminal, it looks like this:
+Run ThreeComponentDecayChain.py with an input file (ThreeComponentDecayChainInput.txt). In the terminal, it looks like this:
 python3 ThreeComponentDecayChain.py ThreeComponentDecayChainInput.txt
 
 The input file should contain:
@@ -18,9 +18,12 @@ T_final (in hours)
 
 The program will return the following results to an output file:
 
-ThreeComponentDecayOutput.txt (text file) - Numerical and Analytical solutions
-GraphInput.json (JSON File) - File to be used as input to plot graph with PlotDecayChain Function:
-    python3 PlotDecayChain.py GraphInput.json 
+ThreeComponentDecayOutput.txt (text file)
+    Numerical and Analytical solutions
+
+GraphInput.json (JSON File) 
+    File to be used as input to plot graph with PlotDecayChain Function:
+        python3 PlotDecayChain.py GraphInput.json 
 
     Outputs:
         Three Component Decay Chain Graph.png

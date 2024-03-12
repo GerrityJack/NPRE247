@@ -81,7 +81,7 @@ for i in range(len(nAf)-1):
 
 for i in range(len(nB)-1):
     nB[i+1] = lambdaA*nA[i] * deltat - lambdaB*nB[i] * deltat + nB[i]
-for i in range(len(nBm)-1):
+for i in range(len(nBm)-1):  
     nBm[i+1] = lambdaA*nAm[i] * (deltat/2) - lambdaB*nBm[i] * (deltat/2) + nBm[i]
 for i in range(len(nBf)-1):
     nBf[i+1] = lambdaA*nAf[i] * (deltat/4) - lambdaB*nBf[i] * (deltat/4) + nBf[i]

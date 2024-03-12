@@ -59,6 +59,22 @@ if __name__ == "__main__":
     plt.ion()
     plt.savefig('Three Component Decay Chain Graph')
 
+plt.clf()
+plt.plot(timestep,nB,'bo',label = 'Numerical B (Coarse)')
+plt.plot(timestep2,nBm,'b.',label = 'Numerical B (Medium)')
+plt.plot(timestep3,nBf,'b:',label = 'Numerical B (Fine)')
+plt.plot(timestep,AnalyticalB,'b',label = 'Analytical B')
+
+if __name__ == "__main__":
+
+    plt.xlabel('Time (Hours)')
+    plt.ylabel('Quanitiy of Component')
+    plt.title('Three Component Decay Chain Calculated Numerically and Analytically')
+    plt.legend(fontsize="8")
+    plt.ioff()
+    plt.ion()
+    plt.savefig('Isotope B Graph')
+
 total = np.zeros(len(timestep3))
 for i in range(len(total)):
     total[i] = nAf[i] + nBf[i] + nCf[i]

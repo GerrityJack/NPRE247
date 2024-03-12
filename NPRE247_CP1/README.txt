@@ -28,7 +28,10 @@ GraphInput.json (JSON File)
     Outputs:
         Three Component Decay Chain Graph.png
             Graph of Coarse, Medium and Fine Numerical Solutions for Isotopes A, B, and C along with Analytical Solution
-        
+
+        Isotope B Graph.png
+            Graph of Coarse, Medium and Fine Numerical Solutions for Isotope B along with Analytical Solution
+
         Time at which Isotope B Reaches a Maxium Graph.png
             Graph of Fine Numerical Solutions along with Sum of All Isotopes at Every Time Value
 

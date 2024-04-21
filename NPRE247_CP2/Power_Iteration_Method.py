@@ -24,11 +24,22 @@ def Create_absorbtion_matrix(group_data):
     return absorbtion_matrix
 
 def Inscattering_matrix(scat_data):
-    
-    for i in range(scat_data):
-        for j in range(scat_data.T):
+    Inscattering_matrix = np.zeros((len(scat_data),len(scat_data[0])))
+    for i in range(len(scat_data)):
+        for j in range(len(scat_data.T)):
             if i ==j:
                 continue
+            else:
+                Inscattering_matrix[j,i] = scat_data[i,j]
+    return Inscattering_matrix
+
+def Outscattering_matrix(scat_data):
+    Outscattering_matrix = np.zeros((len(scat_data),len(scat_data[0])))
+    for i in range(-1,len(scat_data)-1):
+        Outscattering_matrix[i,i] = scat_data[i,i+1]
+    return Outscattering_matrix
+
+
 
 # Parse Input Data
 
@@ -58,7 +69,29 @@ for i in range(len(scat_list)):
         scat_data[i,j] = float(scat_list[i][j])
 
 
+# Create matricies
+k = np.zeros(100)
+k[0] = 1
+flux = np.zeros((len(scat_data),100))
+flux[:,0] = np.ones(len(scat_data))
 
+fission_matrix = Create_fission_matrix(group_data)
+absorbtion_matrix = Create_absorbtion_matrix(group_data)
+outscattering_matrix = Outscattering_matrix(scat_data)
+inscattering_matrix = Inscattering_matrix(scat_data)
+
+mitigation_matrix = absorbtion_matrix + outscattering_matrix - inscattering_matrix
+
+b_matrix = la.inv(mitigation_matrix) @ fission_matrix
+
+eigenvalues, eigenvectors = la.eig(b_matrix)
+
+
+# Power Iteration
+for i in range(99):
+    flux[:,i+1] = (b_matrix @ flux[:,i]) / la.norm(b_matrix @ flux[:,i])
+for i in range(99):
+    k[i+1] = ((b_matrix @ flux[:,i+1]).T @ flux[:,i+1])/(flux[:,i+1].T @ flux[:,i+1])
 
 
 if __name__ == "__main__":

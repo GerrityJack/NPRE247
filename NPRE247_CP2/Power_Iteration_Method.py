@@ -13,7 +13,7 @@ def Create_fission_matrix(group_data):
     fission_matrix = np.ones((dis,dis))
     for i in range(dis):
         for j in range(dis):
-            fission_matrix[i,j] = group_data[i,2] * group_data[i,1]
+            fission_matrix[i,j] = group_data[i,2] * group_data[j,1]
     return fission_matrix
 
 def Create_absorbtion_matrix(group_data):
@@ -24,19 +24,19 @@ def Create_absorbtion_matrix(group_data):
     return absorbtion_matrix
 
 def Inscattering_matrix(scat_data):
-    Inscattering_matrix = np.zeros((len(scat_data),len(scat_data[0])))
+    Inscattering_matrix = scat_data.copy()
     for i in range(len(scat_data)):
-        for j in range(len(scat_data.T)):
-            if i ==j:
-                continue
-            else:
-                Inscattering_matrix[j,i] = scat_data[i,j]
+       Inscattering_matrix[i,i] = 0
     return Inscattering_matrix
 
 def Outscattering_matrix(scat_data):
     Outscattering_matrix = np.zeros((len(scat_data),len(scat_data[0])))
-    for i in range(-1,len(scat_data)-1):
-        Outscattering_matrix[i,i] = scat_data[i,i+1]
+    for i in range(len(scat_data)):
+        for j in range(len(scat_data.T)):
+            if j == i:
+                continue
+            else:
+                Outscattering_matrix[i,i] += scat_data[j,i]
     return Outscattering_matrix
 
 
@@ -70,9 +70,9 @@ for i in range(len(scat_list)):
 
 
 # Create matricies
-k = np.zeros(100)
+k = np.zeros(3)
 k[0] = 1
-flux = np.zeros((len(scat_data),100))
+flux = np.zeros((len(scat_data),3))
 flux[:,0] = np.ones(len(scat_data))
 
 fission_matrix = Create_fission_matrix(group_data)
@@ -88,10 +88,31 @@ eigenvalues, eigenvectors = la.eig(b_matrix)
 
 
 # Power Iteration
-for i in range(99):
+for i in range(2):
     flux[:,i+1] = (b_matrix @ flux[:,i]) / la.norm(b_matrix @ flux[:,i])
-for i in range(99):
+for i in range(2):
     k[i+1] = ((b_matrix @ flux[:,i+1]).T @ flux[:,i+1])/(flux[:,i+1].T @ flux[:,i+1])
+
+# Put Outputs into dictionary
+JSON = {}
+JSON["fission_matrix"] = str(fission_matrix)
+JSON["absorbtion_matrix"] = str(absorbtion_matrix)
+JSON["outscattering_matrix"] = str(outscattering_matrix)
+JSON["inscattering_matrix"] = str(inscattering_matrix)
+JSON["mitigation_matrix"] = str(mitigation_matrix)
+JSON["b_matrix"] = str(b_matrix)
+JSON["eigenvalues"] = str(eigenvalues)
+JSON["eigenvectors"] = str(eigenvectors)
+JSON["flux_array"] = str(flux)
+JSON["k_array"] = str(k)
+JSON["final_flux"] = str(flux[:,-1])
+JSON["final_k"] = str(k[-1])
+
+
 
 
 if __name__ == "__main__":
+
+        with open("ProgramOutput.json", "w") as f:
+            json.dump(JSON, f)
+            f.close()
